@@ -14,5 +14,8 @@ App Functionality In this application, the main page displays a list of "shelves
 commands:
 
 git clone  https://github.com/
+
 cd home --
+
+
 npm start
