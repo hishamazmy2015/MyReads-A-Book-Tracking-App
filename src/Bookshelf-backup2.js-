@@ -1,0 +1,60 @@
+import React, { update, useEffect, useState } from "react";
+import Book from "./Book";
+
+function Bookshelf({ props }) {
+  const result = props;
+  const [res, setRes] = useState([]);
+  const [read, setRead] = useState([]);
+  const [currentlyReading, setCurrentlyReading] = useState([]);
+  const [wantToRead, setWantToRead] = useState([]);
+
+  useEffect(() => {
+    console.log("<==================== result0 ===============> ", result);
+
+    async function fetchMyAPI() {
+      console.log("<==================== result1 ===============> ", result);
+      await result.map((s) => {
+        console.log("<==================== s inside map ===============> ");
+
+        setCurrentlyReading([s, ...currentlyReading]);
+        setWantToRead([s, ...wantToRead]);
+        setRead([s, ...read]);
+      });
+    }
+
+    fetchMyAPI();
+    console.log("<==================== result2 ===============> ", result);
+    console.log("<=====   currentlyReading2 =======> ", currentlyReading);
+    console.log("<========   read2 =====> ", read);
+    console.log("<=========   wantToRead2 =====> ", wantToRead);
+  }, [props]);
+
+  console.log("<==================== result3 ===============> ", result);
+  console.log("<=====   currentlyReading3 =======> ", currentlyReading);
+  console.log("<========   read3 =====> ", read);
+  console.log("<=========   wantToRead3 =====> ", wantToRead);
+
+  return (
+    <div>
+      {res &&
+        res.length > 0 &&
+        res.map((r) => (
+          <div>
+            <h1>{r.shelf} </h1>
+            <div className="bookshelf">
+              <h2 className="bookshelf-title"> {r.shelf}</h2>
+              <div className="bookshelf-books">
+                <ol className="books-grid">
+                  <li>
+                    <Book />
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        ))}
+    </div>
+  );
+}
+
+export default Bookshelf;

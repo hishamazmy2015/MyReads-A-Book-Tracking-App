@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^18.0.0-alpha-bd255700d-20210816",
+    "react-dom": "^18.0.0-alpha-bd255700d-20210816",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
