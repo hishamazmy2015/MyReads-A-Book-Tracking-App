@@ -3,7 +3,7 @@ import Book from "./Book";
 
 function Bookshelf({ props, results2, MoveTos }) {
   const result = props;
-  debugger
+  let result2 = [];
   const [books, setBooks] = useState([]);
   const [reads, setReads] = useState([]);
   const [currentlyReadings, setCurrentlyReadings] = useState([]);
@@ -15,6 +15,17 @@ function Bookshelf({ props, results2, MoveTos }) {
 
   useEffect(() => {
     async function fetchMyAPI() {
+
+      // results2 &&
+      //   (await results2.map((book) => {
+      //     if (book && book.shelf === undefined) {
+      //       book = { ...book, shelf: "None" };
+      //       console.log("@@@@@@@@@@@@@@@@@@ book.shelf ");
+      //       result2 = [book, ...result2];
+      //       // update(book, "None");
+      //     }
+      //   }));
+
       result &&
         (await result.map((s) => {
           if (s.shelf === "currentlyReading") {
@@ -31,7 +42,7 @@ function Bookshelf({ props, results2, MoveTos }) {
     setCurrentlyReadings(currentlyReading);
     setWantToReads(wantToRead);
     setBooks([read, currentlyReading, wantToRead]);
-  }, [props, MoveTos,]);
+  }, [props, MoveTos]);
 
   return (
     <div>
@@ -46,6 +57,7 @@ function Bookshelf({ props, results2, MoveTos }) {
                     <li>
                       <Book book={r} MoveTo={MoveTos} />
                     </li>
+                  
                   </ol>
                 </div>
               </div>

@@ -13,7 +13,8 @@ App Functionality In this application, the main page displays a list of "shelves
 
 commands:
 
-git clone  https://github.com/
-npm i
-cd home --
+[git clone  https://github.com/](https://github.com/hishamazmy2015/MyReads-A-Book-Tracking-App.git)
+
+cd MyReads-A-Book-Tracking-App.git/
+npm install
 npm start

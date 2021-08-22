@@ -15,7 +15,6 @@ function BooksApp() {
 
   const MoveTo = async (book, e) => {
     console.log(" e is ", e);
-    debugger;
     book = { ...book, shelf: e.target.value };
     // update(book, e.target.value);
     await update(book, e.target.value);
