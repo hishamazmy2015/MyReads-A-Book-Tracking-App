@@ -3,7 +3,7 @@ import Book from "./Book";
 
 function Bookshelf({ props, results2, MoveTos }) {
   const result = props;
-
+  debugger
   const [books, setBooks] = useState([]);
   const [reads, setReads] = useState([]);
   const [currentlyReadings, setCurrentlyReadings] = useState([]);
@@ -31,7 +31,7 @@ function Bookshelf({ props, results2, MoveTos }) {
     setCurrentlyReadings(currentlyReading);
     setWantToReads(wantToRead);
     setBooks([read, currentlyReading, wantToRead]);
-  }, [props, results2]);
+  }, [props, MoveTos,]);
 
   return (
     <div>

@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { update } from "./BooksAPI";
 
 function Book({ book, MoveTo }) {
-  if (!book.shelf) {
-    book = { ...book, shelf: "None" };
-    update(book, "None");
-  }
-  console.log("<================== shelf =================>", book);
+  useEffect(() => {
+    if (book && book.shelf === undefined) {
+      book = { ...book, shelf: "None" };
+      console.log("::::::::::::::::::: Inside UseEffect >>>>>>");
+    }
+  }, [book]);
+  // if (book && book.shelf) {
+  //   console.log(
+  //     "555555@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@b",
+  //     book
+  //   );
+  //   console.log(
+  //     "5555555@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@b",
+  //     book.shelf
+  //   );
+  // }
+
+  // if (book && book.shelf === undefined) {
+  //   book = { ...book, shelf: "None" };
+  //   console.log("2@@@@@@@@@@@@@@@@@@@book.shelf 11111 === undefined is right ");
+  //   update(book, "None");
+  // }
+  // if (!book.shelf) {
+  //   book = { ...book, shelf: "None" };
+  //   console.log(
+  //     "2@@@@@@@@@@@@@@@@@@@book.shelf 22222 === shelf  is not exist "
+  //   );
+  //   update(book, "None");
+  // }
+
   return (
     <div>
       {book ? (
@@ -36,17 +61,13 @@ function Book({ book, MoveTo }) {
                 <option value="move" disabled>
                   Move to...
                 </option>
-                <option value="currentlyReading" isOptionDisabled={!book.shelf}>
-                  Currently Reading
-                </option>
-                <option value="wantToRead" isOptionDisabled={!book.shelf}>
-                  Want to Read
-                </option>
+                <option value="currentlyReading">Currently Reading</option>
+                <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
-                <option value="None" isOptionDisabled={!book.shelf}>
+                {/* <option value="None" isOptionDisabled={!book.shelf}>
                   None
-                </option>
-                {/* {!book.shelf ? (
+                </option> */}
+                {!book.shelf ? (
                   <option value="none" disabled={!book.shelf} selected>
                     None
                   </option>
@@ -54,7 +75,7 @@ function Book({ book, MoveTo }) {
                   <option value="none" disabled={!book.shelf}>
                     None
                   </option>
-                )} */}
+                )}
               </select>
             </div>
           </div>

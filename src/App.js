@@ -13,8 +13,14 @@ function BooksApp() {
   const [result, setResult] = useState([]);
   const [result2, setResult2] = useState([]);
 
-  const MoveTo = (book, e) => {
-    update(book, e.target.value).then(fetchMyAPI());
+  const MoveTo = async (book, e) => {
+    console.log(" e is ", e);
+    debugger;
+    book = { ...book, shelf: e.target.value };
+    // update(book, e.target.value);
+    await update(book, e.target.value);
+    // await fetchMyAPI();
+    await fetchMyAPI();
   };
 
   async function fetchMyAPI() {
@@ -26,16 +32,25 @@ function BooksApp() {
     fetchMyAPI();
   }, []);
 
-  async function searchFun(e) {
+   function searchFun(e) {
     setResult2([]);
     if (e && e !== "")
       search(e, 5)
         .then((data) => {
+          // data &&
+          //   data.map((sh) => {
+          //     if (!sh.shelf) {
+          //       sh = { ...sh, shelf: "None" };
+          //       update(sh, "None");
+          //     }
+          //   });
+
           setResult2([...data, ...result2]);
+          // fetchMyAPI();
         })
         .catch((error) => {
           setResult2({ error });
-          console.log("<============= error============ >",error)
+          console.log("<============= error============ >", error);
         });
     else setResult2([]);
   }
@@ -48,19 +63,14 @@ function BooksApp() {
             <Link
               to="/"
               className="close-search"
-              onClick={() => setState({ showSearchPage: false })}
+              onClick={() => {
+                setState({ showSearchPage: false });
+                searchFun("");
+              }}
             >
               Close
             </Link>
             <div className="search-books-input-wrapper">
-              {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
               <input
                 type="search"
                 onChange={(e) => searchFun(e.target.value)}
@@ -70,18 +80,19 @@ function BooksApp() {
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
-              {result2 && result2.length > 0 ? (
+              {result2 && result2.error ? (
+                <div>
+                  <h>Try Search Again </h>
+                </div>
+              ) : result2.length > 0 ? (
                 <Bookshelf results2={result2} MoveTos={MoveTo} />
               ) : (
                 <div>
-                
+                  {" "}
+                  <h1>
                     {" "}
-                    <h1>
-                      {" "}
-                      <span color="#fff388"> No Result </span>
-                    </h1>{" "}
-                  
-                  
+                    <span color="#fff388"> No Result </span>
+                  </h1>{" "}
                 </div>
               )}
             </ol>
@@ -99,7 +110,10 @@ function BooksApp() {
           </div>
           <div className="open-search">
             <Link
-              onClick={() => setState({ showSearchPage: true })}
+              onClick={() => {
+                setState({ showSearchPage: true });
+                searchFun("");
+              }}
               to="/search"
             >
               Add a book
