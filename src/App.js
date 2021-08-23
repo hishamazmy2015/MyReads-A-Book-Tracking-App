@@ -41,7 +41,6 @@ function BooksApp() {
     if (e && e !== "")
       search(e, 5)
         .then((data) => {
-          // let outputRes = [];
           let outputRes = new Set()
           data &&
             data.length > 0 &&
@@ -68,7 +67,6 @@ function BooksApp() {
         })
         .catch((error) => {
           setResult2({ error });
-          console.log("<============= error============ >", error);
         });
     else setResult2([]);
   }
@@ -76,7 +74,6 @@ function BooksApp() {
   return (
     <div className="app">
       <Switch>
-        {/* <Route exact to="/search2" component={Search2}></Route> */}
         <Route
           exact
           path="/search"
@@ -88,12 +85,6 @@ function BooksApp() {
             />
           )}
         ></Route>
-
-        {/* {state.showSearchPage ? (
-          <div>
-   
-          </div>
-        ) : ( */}
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
@@ -120,8 +111,6 @@ function BooksApp() {
             </Link>
           </div>
         </div>
-
-        {/* )} */}
       </Switch>
     </div>
   );

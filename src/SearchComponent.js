@@ -4,7 +4,6 @@ import "./App.css";
 import { Link } from "react-router-dom";
 import Bookshelf from "./Bookshelf";
 
-// function SearchComponent() {
 function SearchComponent({ result2, MoveTo, searchComp }) {
   return (
     <div>

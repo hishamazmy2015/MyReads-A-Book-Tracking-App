@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { update } from "./BooksAPI";
 
 function Book({ book, MoveTo }) {
-  console.log("object book ===================>  ",book);
-  console.log("object book ===================>  ",book);
-  console.log("object book ===================>  ",book);
-  console.log("object book ===================>  ",book);
+
   useEffect(() => {
     if (book && book.shelf === undefined) {
       book = { ...book, shelf: "None" };
@@ -47,23 +44,12 @@ function Book({ book, MoveTo }) {
                 <option value="None" isOptionDisabled={!book.shelf}>
                   None
                 </option>
-                {/* {!book.shelf ? (
-                  <option value="none" disabled={!book.shelf} selected>
-                    None
-                  </option>
-                ) : (
-                  <option value="none" disabled={!book.shelf}>
-                    None
-                  </option>
-                )} */}
               </select>
             </div>
           </div>
           <div className="book-title">{book.title}</div>
           <div className="book-authors">
-            {/* {book.authors} */}
           {book.authors && book.authors.join(', ') }
-            
             </div>
         </div>
       ) : (

@@ -15,17 +15,6 @@ function Bookshelf({ props, results2, MoveTos }) {
 
   useEffect(() => {
     async function fetchMyAPI() {
-
-      // results2 &&
-      //   (await results2.map((book) => {
-      //     if (book && book.shelf === undefined) {
-      //       book = { ...book, shelf: "None" };
-      //       console.log("@@@@@@@@@@@@@@@@@@ book.shelf ");
-      //       result2 = [book, ...result2];
-      //       // update(book, "None");
-      //     }
-      //   }));
-
       result &&
         (await result.map((s) => {
           if (s.shelf === "currentlyReading") {
