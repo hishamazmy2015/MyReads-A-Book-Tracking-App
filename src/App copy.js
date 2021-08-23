@@ -6,7 +6,7 @@ import "./App.css";
 import { Link } from "react-router-dom";
 import Bookshelf from "./Bookshelf";
 import SearchComponent from "./SearchComponent";
-import Search2 from "./Search2";
+import Search2 from './Search2';
 import { Switch } from "react-router-dom/cjs/react-router-dom.min";
 function BooksApp() {
   const [state, setState] = useState({
@@ -36,7 +36,6 @@ function BooksApp() {
   }, []);
 
   function searchFun(e) {
-    debugger;
     setResult2([]);
     if (e && e !== "")
       search(e, 5)
@@ -53,24 +52,25 @@ function BooksApp() {
   return (
     <div className="app">
       <Switch>
-        {/* <Route exact to="/search2" component={Search2}></Route> */}
-        <Route
-          exact
-          path="/search"
-          render={() => (
-            <SearchComponent
-              result2={result2}
-              MoveTo={MoveTo}
-              searchComp={searchFun}
-            />
-          )}
-        ></Route>
 
-        {/* {state.showSearchPage ? (
-          <div>
-   
-          </div>
-        ) : ( */}
+
+      <Route exact path="/search2" component={Search2} ></Route>
+
+
+      <Route
+        exact
+        path="/search"
+        component={
+          <SearchComponent
+            res={result2}
+            MoveTos={MoveTo}
+            searchFuns={searchFun}
+          />
+        }
+      ></Route>
+      {state.showSearchPage ? (
+        <div></div>
+      ) : (
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
@@ -90,17 +90,17 @@ function BooksApp() {
                 setState({ showSearchPage: true });
                 searchFun("");
               }}
-              to="/search"
+              path="/search"
               exact
             >
               Add a book
             </Link>
           </div>
         </div>
-
-        {/* )} */}
-      </Switch>
+      )}
+    </Switch>
     </div>
+
   );
 }
 
