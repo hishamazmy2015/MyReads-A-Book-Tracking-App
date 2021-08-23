@@ -14,7 +14,6 @@ function BooksApp() {
   const [result2, setResult2] = useState([]);
 
   const MoveTo = async (book, e) => {
-    console.log(" e is ", e);
     book = { ...book, shelf: e.target.value };
     await update(book, e.target.value);
     await fetchMyAPI();
@@ -45,55 +44,54 @@ function BooksApp() {
   return (
     <div className="app">
       <Switch>
-        <Route exact path="/search2" component={Search2}></Route>
         <Route
-            exact
-            path="/search"
-            render={() => {
-              <div className="search-books">
-                <div className="search-books-bar">
-                  <Link
-                    exact
-                    to="/"
-                    className="close-search"
-                    onClick={() => {
-                      setState({ showSearchPage: false });
-                      searchFun("");
-                    }}
-                  >
-                    Close
-                  </Link>
-                  <div className="search-books-input-wrapper">
-                    <input
-                      type="search"
-                      onChange={(e) => searchFun(e.target.value)}
-                      placeholder="Search by title or author"
-                    />
-                  </div>
+          exact
+          path="/search"
+          render={() => {
+            <div className="search-books">
+              <div className="search-books-bar">
+                <Link
+                  exact
+                  to="/"
+                  className="close-search"
+                  onClick={() => {
+                    setState({ showSearchPage: false });
+                    searchFun("");
+                  }}
+                >
+                  Close
+                </Link>
+                <div className="search-books-input-wrapper">
+                  <input
+                    type="search"
+                    onChange={(e) => searchFun(e.target.value)}
+                    placeholder="Search by title or author"
+                  />
                 </div>
-                <div className="search-books-results">
-                  <ol className="books-grid">
-                    {result2 && result2.error ? (
-                      <div>
-                        <h>Try Search Again </h>
-                      </div>
-                    ) : result2.length > 0 ? (
-                      <Bookshelf results2={result2} MoveTos={MoveTo} />
-                    ) : (
-                      <div>
+              </div>
+              <div className="search-books-results">
+                <ol className="books-grid">
+                  {result2 && result2.error ? (
+                    <div>
+                      <h>Try Search Again </h>
+                    </div>
+                  ) : result2.length > 0 ? (
+                    <Bookshelf results2={result2} MoveTos={MoveTo} />
+                  ) : (
+                    <div>
+                      {" "}
+                      <h1>
                         {" "}
-                        <h1>
-                          {" "}
-                          <span color="#fff388"> No Result </span>
-                        </h1>{" "}
-                      </div>
-                    )}
-                  </ol>
-                </div>
-              </div>;
-            }}
-          ></Route>
-          
+                        <span color="#fff388"> No Result </span>
+                      </h1>{" "}
+                    </div>
+                  )}
+                </ol>
+              </div>
+            </div>;
+          }}
+        ></Route>
+
         {state.showSearchPage ? (
           <Route
             exact

@@ -41,7 +41,30 @@ function BooksApp() {
     if (e && e !== "")
       search(e, 5)
         .then((data) => {
-          setResult2([...data, ...result2]);
+          // let outputRes = [];
+          let outputRes = new Set()
+          data &&
+            data.length > 0 &&
+            data.map((item) => {
+              const output =
+                result &&
+                result.filter((res) => {
+                  if (res.id === item.id) return res;
+                });
+
+              if (output && output.length > 0)
+                outputRes = [...outputRes, ...output];
+              else {
+                if (item && item.shelf === undefined) {
+                  const itemTemp = { ...item, shelf: "None" };
+                  outputRes = [...outputRes, itemTemp];
+                } else outputRes = [...outputRes, item];
+              }
+
+              console.log("output are ", outputRes);
+            });
+
+          setResult2([...outputRes, ...result2]);
         })
         .catch((error) => {
           setResult2({ error });

@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { update } from "./BooksAPI";
 
 function Book({ book, MoveTo }) {
-
+  console.log("object book ===================>  ",book);
+  console.log("object book ===================>  ",book);
+  console.log("object book ===================>  ",book);
+  console.log("object book ===================>  ",book);
   useEffect(() => {
     if (book && book.shelf === undefined) {
       book = { ...book, shelf: "None" };
     }
-  }, [book]);
+  }, []);
 
   return (
     <div>
@@ -41,10 +44,10 @@ function Book({ book, MoveTo }) {
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
-                {/* <option value="None" isOptionDisabled={!book.shelf}>
+                <option value="None" isOptionDisabled={!book.shelf}>
                   None
-                </option> */}
-                {!book.shelf ? (
+                </option>
+                {/* {!book.shelf ? (
                   <option value="none" disabled={!book.shelf} selected>
                     None
                   </option>
@@ -52,7 +55,7 @@ function Book({ book, MoveTo }) {
                   <option value="none" disabled={!book.shelf}>
                     None
                   </option>
-                )}
+                )} */}
               </select>
             </div>
           </div>

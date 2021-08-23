@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Route } from "react-router-dom";
-
-import { getAll, search, update } from "./BooksAPI";
+import React, { useEffect, useState } from "react";
+import { Link, Route } from "react-router-dom";
+import { Switch } from "react-router-dom/cjs/react-router-dom.min";
 import "./App.css";
-import { Link } from "react-router-dom";
+import { getAll, search, update } from "./BooksAPI";
 import Bookshelf from "./Bookshelf";
 import SearchComponent from "./SearchComponent";
-import Search2 from './Search2';
-import { Switch } from "react-router-dom/cjs/react-router-dom.min";
+
 function BooksApp() {
   const [state, setState] = useState({
     showSearchPage: false,
@@ -16,10 +14,11 @@ function BooksApp() {
   const [result2, setResult2] = useState([]);
 
   const MoveTo = async (book, e) => {
-    console.log(" e is ", e);
     book = { ...book, shelf: e.target.value };
     await update(book, e.target.value);
+    fetchMyAPI();
     await fetchMyAPI();
+    //Need To Cancel the request before the newest one.
   };
 
   async function fetchMyAPI() {
@@ -35,16 +34,37 @@ function BooksApp() {
     fetchMyAPI();
   }, []);
 
+  const combinedIDOfBooks = (books1, books2) => {
+    // result2.map((item,i) =>Object.assign({},item,result[i]))
+  };
   function searchFun(e) {
+    let responseAssignResult2 = [];
     setResult2([]);
     if (e && e !== "")
       search(e, 5)
-        .then((data) => {
-          setResult2([...data, ...result2]);
+        .then((res2) => {
+          res2.map((item, i) => {
+            if (item && item.shelf === undefined) {
+              item = { ...item, shelf: "None" };
+            }
+            const found = result.filter((exist) => {
+               (exist.id === item.id) ;
+            });
+            if (found) console.log("<=========== Found =========== > ", found);
+
+            responseAssignResult2 = [item, ...responseAssignResult2];
+            // Object.assign({},item,result[i])
+          });
+          setResult2([responseAssignResult2, ...result2]);
+
+          // res.map(data=>{
+          //   const found = result.map((exist) => {if(exist.id === data.id ) return exist });
+          //   if (!found) setResult2([data, ...result2]);
+          //   else setResult2([found, ...result2]);
+          // })
         })
         .catch((error) => {
           setResult2({ error });
-          console.log("<============= error============ >", error);
         });
     else setResult2([]);
   }
@@ -52,25 +72,17 @@ function BooksApp() {
   return (
     <div className="app">
       <Switch>
-
-
-      <Route exact path="/search2" component={Search2} ></Route>
-
-
-      <Route
-        exact
-        path="/search"
-        component={
-          <SearchComponent
-            res={result2}
-            MoveTos={MoveTo}
-            searchFuns={searchFun}
-          />
-        }
-      ></Route>
-      {state.showSearchPage ? (
-        <div></div>
-      ) : (
+        <Route
+          exact
+          path="/search"
+          render={() => (
+            <SearchComponent
+              result2={result2}
+              MoveTo={MoveTo}
+              searchComp={searchFun}
+            />
+          )}
+        ></Route>
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
@@ -90,17 +102,15 @@ function BooksApp() {
                 setState({ showSearchPage: true });
                 searchFun("");
               }}
-              path="/search"
+              to="/search"
               exact
             >
               Add a book
             </Link>
           </div>
         </div>
-      )}
-    </Switch>
+      </Switch>
     </div>
-
   );
 }
 
