@@ -13,18 +13,26 @@ function BooksApp() {
     showSearchPage: false,
   });
   const [result, setResult] = useState([]);
+
   const [result2, setResult2] = useState([]);
 
-  const MoveTo = async (book, e) => {
-    console.log(" e is ", e);
+  const MoveTo = (book, e) => {
     book = { ...book, shelf: e.target.value };
-    await update(book, e.target.value);
-    await fetchMyAPI();
+    const filterRes = result.filter((res) => {
+      if (res.id !== book.id) return res;
+    });
+
+    update(book, e.target.value).then(() => {
+      setResult([...filterRes, book]);
+    });
   };
 
   async function fetchMyAPI() {
-    let fu = await getAll();
-    setResult(fu);
+    //check this for init only !!!
+    if (result.length < 1) {
+      let fu = await getAll();
+      setResult(fu);
+    } else setResult(result);
   }
 
   async function changeSearchPage() {
@@ -36,12 +44,11 @@ function BooksApp() {
   }, []);
 
   function searchFun(e) {
-    debugger;
     setResult2([]);
     if (e && e !== "")
       search(e, 5)
         .then((data) => {
-          let outputRes = new Set()
+          let outputRes = new Set();
           data &&
             data.length > 0 &&
             data.map((item) => {

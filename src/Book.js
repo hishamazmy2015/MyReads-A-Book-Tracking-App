@@ -41,7 +41,7 @@ function Book({ book, MoveTo }) {
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
-                <option value="None" isOptionDisabled={!book.shelf}>
+                <option value="None" >
                   None
                 </option>
               </select>
